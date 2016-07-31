@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type"   content="text/html; charset=utf-8"  />
+<script src="js/jquery-2.2.3.min.js"></script>
+<style>
+/*样式重置*/
+*{margin:0;padding:0;}
+li{list-style:none;}
+a{text-decoration:none;}
+
+
+	.figure{
+		width:100%;
+		background:url(images/big.jpg) no-repeat top center;
+	}
+	.figure:after{
+		content:'';
+		display:block;
+		padding-top:100%;
+	}
+	.row{
+		width:1000px;
+		height:330px;
+		overflow:hidden;
+		margin:0 auto;
+		position:relative;
+	}
+	.show-bg{
+		width:100%;
+		height:100%;
+		background:url(images/big1.jpg) no-repeat top center;
+		position:relative;
+	}
+	ul{
+		position:absolute;
+		top:10px;
+		left:15px;
+	}
+
+	.figure li{
+		float:left;
+	}
+	.figure .range{
+		margin-left:500px;
+	}
+
+	.figure li a{
+		display:block;
+		width:75px;
+		height:181px;
+		background-image:url(images/figure_out.png);
+		background-repeat:no-repeat;
+	}
+	.pic1{
+		background-position:-2px -3px;
+	}
+	.pic2{
+		background-position:-81px -3px;
+	}
+	.pic3{
+		background-position:-160px -3px;
+	}
+	.pic4{
+		background-position:-239px -3px;
+	}
+	.pic5{
+		background-position:-318px -3px;
+	}
+	.pic6{
+		background-position:-397px -3px;
+	}
+
+	.figure .click_over a{
+		background-image:url(images/figure_over.png);
+	}
+
+</style>
+</head>
+<body>
+	<div class="figure">
+		<div class="row">
+			<div class="show-bg"></div>
+			<ul>
+				<li class="click_over"><a href="javascript:;" class="pic1"></a></li>
+				<li><a href="javascript:;" class="pic2"></a></li>
+				<li><a href="javascript:;" class="pic3"></a></li>
+				<li class="range"><a href="javascript:;" class="pic4"></a></li>
+				<li><a href="javascript:;" class="pic5"></a></li>
+				<li><a href="javascript:;" class="pic6"></a></li>
+			</ul>
+		</div>
+	</div>
+
+<script>
+	$(document).ready(function(){
+
+	var bgPicUrl = ['url(images/big1.jpg)','url(images/big2.jpg)','url(images/big3.jpg)','url(images/big4.jpg)','url(images/big5.jpg)','url(images/big6.jpg)'];    //背景图片
+
+	var timer = null;   //定义一个变量为空指针
+	var num=1;   //如果赋值为0的话，自动轮播是第一张图会停止两倍时间
+	
+	//图片切换函数
+	function jumper(n){  
+		$('.figure li').eq(n).addClass('click_over').siblings().removeClass('click_over');  
+		$('.show-bg').css('background',bgPicUrl[n]); 
+	}
+
+	//点击切换
+	$('.figure li').click(function(){ 	
+			var i = $(this).index();
+			jumper(i);
+			num = i +1; //改变全局变量的值，以便自动轮播能够衔接上	 
+		});
+
+	function  auto(){
+		if(num==$('.figure li').length){
+			num = 0;}
+		jumper(num);
+		num++;	
+	}
+	timer = setInterval(auto,3000);
+	
+	$('.figure li').mouseover(function(){
+		clearInterval(timer); //点击切换时，自动轮播暂停
+	});
+	$('.figure li').mouseout(function(){
+		timer = setInterval(auto,2000); //点击切换后，自动轮播继续
+	});
+
+
+})
+</script>
+
+
+
+
+
+</body>
+</html>
